@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "34860945701",
+    "project_id": "letstest-5da90",
+    "storage_bucket": "letstest-5da90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34860945701:android:d23f6e1fd0a20128798acc",
+        "android_client_info": {
+          "package_name": "com.example.letstest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWFR85oize5UiuiZj9sEA7V6LUoOscNQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

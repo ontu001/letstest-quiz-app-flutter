@@ -12,12 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Lest Test',
+      title: 'Lets Test',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.orangeAccent
       ),
-      home:  const SignUp(),
+      home:  const SignIn(),
     );
   }
 }

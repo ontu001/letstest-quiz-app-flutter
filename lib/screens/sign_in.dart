@@ -15,6 +15,12 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _keyForm = GlobalKey<FormState>();
   late String email, password;
+
+  signIn(){
+    if(_keyForm.currentState!.validate()){
+
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,15 +84,20 @@ resizeToAvoidBottomInset: true,
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  height: 50,
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.orangeAccent,
-                    borderRadius: BorderRadius.circular(10),
+                GestureDetector(
+                  onTap: (){
+                    signIn();
+                  },
+                  child: Container(
+                    height: 50,
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.orangeAccent,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Text('SignIn',style: TextStyle(color: Colors.white,fontSize: 18.0),),
                   ),
-                  child: const Text('SignIn',style: TextStyle(color: Colors.white,fontSize: 18.0),),
                 ),
               ],
             ),
