@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:letstest/screens/sign_up.dart';
 import 'package:letstest/services/authentication.dart';
+import 'package:letstest/utils/saved_loggedin_user.dart';
 import '../widgets/custom_text_form_filed.dart';
 import '../widgets/orange_button.dart';
 import 'home_screen.dart';
@@ -33,6 +34,7 @@ class _SignInState extends State<SignIn> {
           setState(() {
             isLoading = false;
           });
+          SaveUserInfo.saveLoggedInUser(loggedIn: true);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => HomeScreen()));
         } else {

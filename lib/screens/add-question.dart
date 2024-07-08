@@ -39,11 +39,6 @@ class _AddQuestionState extends State<AddQuestion> {
 
 
        await databaseService.addQuestionData(questionMap, widget.quizId!).then((value){
-          question = "";
-          option1 = "";
-          option2 = "";
-          option3 = "";
-          option4 = "";
           setState(() {
             _isLoading = false;
 
@@ -152,11 +147,15 @@ class _AddQuestionState extends State<AddQuestion> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                       child: customOrangeButton(context, 'Submit',
                           width: MediaQuery.of(context).size.width / 2 - 34)),
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        addQuizQuestion();
+                      },
                       child: customOrangeButton(context, 'Add Question',
                           width: MediaQuery.of(context).size.width / 2 - 34))
                 ],

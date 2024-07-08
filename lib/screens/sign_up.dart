@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:letstest/screens/sign_in.dart';
 import 'package:letstest/services/authentication.dart';
+import 'package:letstest/utils/saved_loggedin_user.dart';
+import 'package:letstest/widgets/orange_button.dart';
 
 import '../widgets/custom_text_form_filed.dart';
-import '../widgets/orange_button.dart';
 import 'home_screen.dart';
 
 class SignUp extends StatefulWidget {
@@ -32,7 +33,7 @@ class _SignUpState extends State<SignUp> {
           setState(() {
             isLoading = false;
           });
-
+          SaveUserInfo.saveLoggedInUser(loggedIn: true);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => HomeScreen()));
         }
@@ -138,7 +139,8 @@ class _SignUpState extends State<SignUp> {
                         onTap: () {
                           signUp();
                         },
-                        child: customOrangeButton(context, 'Sign Up',fullWidth: true),
+                        child: customOrangeButton(context, 'Sign Up',
+                            fullWidth: true),
                       ),
                     ],
                   ),
