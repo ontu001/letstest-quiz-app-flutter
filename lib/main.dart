@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:letstest/screens/add-question.dart';
 import 'package:letstest/screens/home_screen.dart';
 import 'package:letstest/screens/sign_in.dart';
 import 'package:letstest/screens/sign_up.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.orangeAccent
       ),
-      home:  const HomeScreen(),
+      home:  const AddQuestion(),
     );
   }
 }

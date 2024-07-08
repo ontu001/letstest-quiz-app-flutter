@@ -21,30 +21,29 @@ class _QuizCreateState extends State<QuizCreate> {
   late String quizPrompt, quizDescription, imageUrl, quizId;
   bool _isLoading = false;
 
-
-  createQuiz(){
-    if(_keyForm.currentState!.validate()){
-
+  createQuiz() {
+    if (_keyForm.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
       quizId = randomAlphaNumeric(16);
       Map<String, String> quizData = {
-        "quizId" : quizId,
-        "quizImgUrl" : imageUrl,
-        "quizTitle" : quizPrompt,
-        "quizDesc" : quizDescription
+        "quizId": quizId,
+        "quizImgUrl": imageUrl,
+        "quizTitle": quizPrompt,
+        "quizDesc": quizDescription
       };
 
-      databaseService.addQuizData(quizData, quizId).then((value){
+      databaseService.addQuizData(quizData, quizId).then((value) {
         setState(() {
           _isLoading = false;
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> AddQuestion()));
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => AddQuestion()));
         });
       });
-
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,58 +68,64 @@ class _QuizCreateState extends State<QuizCreate> {
         ),
         elevation: 0,
       ),
-      body:_isLoading  ? const Center(child: CircularProgressIndicator(color: kCommonColor,),) : Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Form(
-          key: _keyForm,
-          child: Column(
-            children: [
-              CustomTextFormField(
-                hintText: 'Image Url',
-                obscureText: false,
-                onChanged: (value) {
-                  quizPrompt = value;
-                },
-                validator: (value) {
-                  return value!.isEmpty ? "image url" : null;
-                },
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: kCommonColor,
               ),
-              const SizedBox(
-                height: 15.0,
+            )
+          : Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Form(
+                key: _keyForm,
+                child: Column(
+                  children: [
+                    CustomTextFormField(
+                      hintText: 'Image Url',
+                      obscureText: false,
+                      onChanged: (value) {
+                        imageUrl = value;
+                      },
+                      validator: (value) {
+                        return value!.isEmpty ? "image url" : null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15.0,
+                    ),
+                    CustomTextFormField(
+                      hintText: 'Quiz Title',
+                      obscureText: false,
+                      onChanged: (value) {
+                        quizPrompt = value;
+                      },
+                      validator: (value) {
+                        return value!.isEmpty ? "What Will be the tile?" : null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15.0,
+                    ),
+                    CustomTextFormField(
+                      hintText: 'Quiz Description',
+                      obscureText: false,
+                      onChanged: (value) {
+                        quizDescription = value;
+                      },
+                      validator: (value) {
+                        return value!.isEmpty ? "Description please" : null;
+                      },
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                        onTap: () {
+                          createQuiz();
+                        },
+                        child: customOrangeButton(context, 'Create Quiz')),
+                  ],
+                ),
               ),
-              CustomTextFormField(
-                hintText: 'Quiz Title',
-                obscureText: false,
-                onChanged: (value) {
-                  quizPrompt = value;
-                },
-                validator: (value) {
-                  return value!.isEmpty ? "What Will be the tile?" : null;
-                },
-              ),
-              const SizedBox(
-                height: 15.0,
-              ),
-              CustomTextFormField(
-                hintText: 'Quiz Description',
-                obscureText: false,
-                onChanged: (value) {
-                  quizDescription = value;
-                },
-                validator: (value) {
-                  return value!.isEmpty ? "Description please" : null;
-                },
-              ),
-              const Spacer(),
-              GestureDetector(
-                  onTap: (){
-                    createQuiz();
-                  },
-                  child: customOrangeButton(context, 'Create Quiz')),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

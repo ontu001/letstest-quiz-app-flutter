@@ -5,7 +5,7 @@ Widget customOrangeButton(BuildContext context, String text) {
   return Container(
     height: 50,
     alignment: Alignment.center,
-    width: MediaQuery.of(context).size.width,
+    width: 200,
     decoration: BoxDecoration(
       color: kCommonColor,
       borderRadius: BorderRadius.circular(10),
