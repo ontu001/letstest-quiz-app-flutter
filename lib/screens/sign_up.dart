@@ -3,6 +3,7 @@ import 'package:letstest/screens/sign_in.dart';
 import 'package:letstest/services/authentication.dart';
 
 import '../widgets/custom_text_form_filed.dart';
+import '../widgets/orange_button.dart';
 import 'home_screen.dart';
 
 class SignUp extends StatefulWidget {
@@ -137,20 +138,7 @@ class _SignUpState extends State<SignUp> {
                         onTap: () {
                           signUp();
                         },
-                        child: Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Colors.orangeAccent,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Text(
-                            'SignUp',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 18.0),
-                          ),
-                        ),
+                        child: customOrangeButton(context, 'Sign Up'),
                       ),
                     ],
                   ),

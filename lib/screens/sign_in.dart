@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:letstest/screens/sign_up.dart';
 import 'package:letstest/services/authentication.dart';
 import '../widgets/custom_text_form_filed.dart';
+import '../widgets/orange_button.dart';
 import 'home_screen.dart';
 
 class SignIn extends StatefulWidget {
@@ -138,20 +139,7 @@ class _SignInState extends State<SignIn> {
                         onTap: () {
                           signIn();
                         },
-                        child: Container(
-                          height: 50,
-                          alignment: Alignment.center,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Colors.orangeAccent,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Text(
-                            'SignIn',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 18.0),
-                          ),
-                        ),
+                        child: customOrangeButton(context, 'Sign In'),
                       ),
                     ],
                   ),
