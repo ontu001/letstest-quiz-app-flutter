@@ -116,13 +116,13 @@ class _AddQuestionState extends State<AddQuestion> {
                       onTap: () {
 
                       },
-                      child: customOrangeButton(context, 'Submit')),
+                      child: customOrangeButton(context, 'Submit',width: 200)),
 
                   GestureDetector(
                       onTap: () {
 
                       },
-                      child: customOrangeButton(context, 'Add Question'))
+                      child: customOrangeButton(context, 'Add Question',width: 200))
                 ],
               ),
             ],

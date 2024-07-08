@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:letstest/utils/const.dart';
 
-Widget customOrangeButton(BuildContext context, String text) {
+Widget customOrangeButton(BuildContext context, String text, {double? width, bool fullWidth = false}) {
   return Container(
     height: 50,
     alignment: Alignment.center,
-    width: 200,
+    width: fullWidth ? MediaQuery.of(context).size.width : width,
     decoration: BoxDecoration(
       color: kCommonColor,
       borderRadius: BorderRadius.circular(10),

@@ -121,7 +121,7 @@ class _QuizCreateState extends State<QuizCreate> {
                         onTap: () {
                           createQuiz();
                         },
-                        child: customOrangeButton(context, 'Create Quiz')),
+                        child: customOrangeButton(context, 'Create Quiz',fullWidth: true)),
                   ],
                 ),
               ),

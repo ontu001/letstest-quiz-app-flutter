@@ -138,7 +138,7 @@ class _SignUpState extends State<SignUp> {
                         onTap: () {
                           signUp();
                         },
-                        child: customOrangeButton(context, 'Sign Up'),
+                        child: customOrangeButton(context, 'Sign Up',fullWidth: true),
                       ),
                     ],
                   ),
