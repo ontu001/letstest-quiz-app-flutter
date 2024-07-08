@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:letstest/screens/home_screen.dart';
 import 'package:letstest/screens/quiz_create.dart';
 import 'package:letstest/services/database.dart';
 
@@ -148,7 +149,7 @@ class _AddQuestionState extends State<AddQuestion> {
                 children: [
                   GestureDetector(
                       onTap: () {
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomeScreen()));
                       },
                       child: customOrangeButton(context, 'Submit',
                           width: MediaQuery.of(context).size.width / 2 - 34)),

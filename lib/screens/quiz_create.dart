@@ -4,7 +4,6 @@ import 'package:letstest/screens/home_screen.dart';
 import 'package:letstest/services/database.dart';
 import 'package:letstest/widgets/orange_button.dart';
 import 'package:random_string/random_string.dart';
-import 'dart:math' show Random;
 import '../utils/const.dart';
 import '../widgets/custom_text_form_filed.dart';
 
@@ -38,7 +37,11 @@ class _QuizCreateState extends State<QuizCreate> {
         setState(() {
           _isLoading = false;
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => AddQuestion(quizId: quizId,)));
+              context,
+              MaterialPageRoute(
+                  builder: (_) => AddQuestion(
+                        quizId: quizId,
+                      )));
         });
       });
     }
@@ -121,7 +124,8 @@ class _QuizCreateState extends State<QuizCreate> {
                         onTap: () {
                           createQuiz();
                         },
-                        child: customOrangeButton(context, 'Create Quiz',fullWidth: true)),
+                        child: customOrangeButton(context, 'Create Quiz',
+                            fullWidth: true)),
                   ],
                 ),
               ),

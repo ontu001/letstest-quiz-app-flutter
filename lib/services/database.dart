@@ -15,10 +15,14 @@ class DatabaseService {
     await FirebaseFirestore.instance
         .collection("Quiz")
         .doc(quizId)
-        .collection("QNA")
+        .collection("QUESSTION AND ANSWER")
         .add(quizData)
         .catchError((e) {
       print(e);
     });
+  }
+
+  getQuizes() async {
+    return await FirebaseFirestore.instance.collection("Quiz").snapshots();
   }
 }
