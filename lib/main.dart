@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.orangeAccent
       ),
-      home:  const SignUp(),
+      home:   AddQuestion(),
     );
   }
 }

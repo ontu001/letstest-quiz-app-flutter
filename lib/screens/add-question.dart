@@ -1,13 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:letstest/screens/quiz_create.dart';
+import 'package:letstest/services/database.dart';
 
 import '../utils/const.dart';
 import '../widgets/custom_text_form_filed.dart';
 import '../widgets/orange_button.dart';
 
 class AddQuestion extends StatefulWidget {
-  const AddQuestion({super.key});
+  final String? quizId;
+  AddQuestion({this.quizId});
 
   @override
   State<AddQuestion> createState() => _AddQuestionState();
@@ -15,7 +16,45 @@ class AddQuestion extends StatefulWidget {
 
 class _AddQuestionState extends State<AddQuestion> {
   final _keyForm = GlobalKey<FormState>();
+  DatabaseService databaseService  = new DatabaseService();
   late String question, option1, option2, option3, option4;
+  bool _isLoading = false;
+
+  addQuizQuestion() async {
+    if (_keyForm.currentState!.validate()) {
+
+      if(widget.quizId !=null){
+
+        setState(() {
+          _isLoading = true;
+        });
+
+        Map<String, String> questionMap = {
+          "question": question,
+          "option1": option1,
+          "option2": option2,
+          "option3": option3,
+          "option4": option4
+        };
+
+
+       await databaseService.addQuestionData(questionMap, widget.quizId!).then((value){
+          question = "";
+          option1 = "";
+          option2 = "";
+          option3 = "";
+          option4 = "";
+          setState(() {
+            _isLoading = false;
+
+
+          });
+        });
+      }
+
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +79,7 @@ class _AddQuestionState extends State<AddQuestion> {
         ),
         elevation: 0,
       ),
-      body: Padding(
+      body:_isLoading ? const Center(child: CircularProgressIndicator(color: kCommonColor,),) : Padding(
         padding: const EdgeInsets.all(18.0),
         child: Form(
           key: _keyForm,
@@ -89,7 +128,7 @@ class _AddQuestionState extends State<AddQuestion> {
                 hintText: 'Option 3',
                 obscureText: false,
                 onChanged: (value) {
-                  option2 = value;
+                  option3 = value;
                 },
                 validator: (value) {
                   return value!.isEmpty ? "What Will be the option 3?" : null;
@@ -102,7 +141,7 @@ class _AddQuestionState extends State<AddQuestion> {
                 hintText: 'Option 4',
                 obscureText: false,
                 onChanged: (value) {
-                  option2 = value;
+                  option4 = value;
                 },
                 validator: (value) {
                   return value!.isEmpty ? "What Will be the option 4?" : null;
@@ -113,16 +152,13 @@ class _AddQuestionState extends State<AddQuestion> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                      onTap: () {
-
-                      },
-                      child: customOrangeButton(context, 'Submit',width: 200)),
-
+                      onTap: () {},
+                      child: customOrangeButton(context, 'Submit',
+                          width: MediaQuery.of(context).size.width / 2 - 34)),
                   GestureDetector(
-                      onTap: () {
-
-                      },
-                      child: customOrangeButton(context, 'Add Question',width: 200))
+                      onTap: () {},
+                      child: customOrangeButton(context, 'Add Question',
+                          width: MediaQuery.of(context).size.width / 2 - 34))
                 ],
               ),
             ],

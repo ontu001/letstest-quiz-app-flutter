@@ -38,7 +38,7 @@ class _QuizCreateState extends State<QuizCreate> {
         setState(() {
           _isLoading = false;
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => AddQuestion()));
+              context, MaterialPageRoute(builder: (_) => AddQuestion(quizId: quizId,)));
         });
       });
     }
