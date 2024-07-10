@@ -159,7 +159,7 @@ class _RunQuizState extends State<RunQuiz> {
                       incorrect: incorrect,
                       total: total,
                       correct: correct,
-                      notattempted: notAttempted)));
+                      notattempted: notAttempted, quizId: widget.quizId,)));
         },
         child: const Icon(Icons.check, color: Colors.white),
       ),

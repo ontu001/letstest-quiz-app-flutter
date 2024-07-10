@@ -21,11 +21,13 @@ class _QuizOptionDesignWidgetsState extends State<QuizOptionDesignWidgets> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
+          margin: EdgeInsets.all(5.0),
           height: 70,
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          width: MediaQuery.of(context).size.width/1.1,
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          width: MediaQuery.of(context).size.width/1.5,
 
           decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
             // border: Border.all(
             //     color: widget.optionSelected == widget.description
             //         ? widget.description == widget.correctAnswer
@@ -47,8 +49,9 @@ class _QuizOptionDesignWidgetsState extends State<QuizOptionDesignWidgets> {
                 style: TextStyle(
                   color: widget.optionSelected == widget.description
                       ? Colors.white
-                      : Colors.grey,
-                  fontSize: 26.0
+                      : Colors.black87,
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold
                 ),
               ),
               const SizedBox(
@@ -59,8 +62,8 @@ class _QuizOptionDesignWidgetsState extends State<QuizOptionDesignWidgets> {
                 style: TextStyle(
                   color: widget.optionSelected == widget.description
                       ? Colors.white
-                      : Colors.grey,
-                  fontSize: 24.0
+                      : Colors.black54,
+                  fontSize: 20.0
                 ),
               ),
             ],

@@ -33,4 +33,41 @@ class DatabaseService {
         .collection("QUESSTION AND ANSWER")
         .get();
   }
+
+
+  Future<void> updateQuizData(Map<String, dynamic> quizData, String quizId) async {
+    await FirebaseFirestore.instance
+        .collection("Quiz")
+        .doc(quizId)
+        .update(quizData)
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+  Future<void> deleteQuiz(String quizId) async {
+    await FirebaseFirestore.instance
+        .collection("Quiz")
+        .doc(quizId)
+        .delete()
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+  Future<void> addAttemptData(Map<String, dynamic> attemptData) async {
+    await FirebaseFirestore.instance
+        .collection("Attempts")
+        .add(attemptData)
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+  getAttempts() async {
+    return await FirebaseFirestore.instance.collection("Attempts").snapshots();
+  }
+  Future<DocumentSnapshot> getQuizTitle(String quizId) async {
+    return await FirebaseFirestore.instance.collection("Quiz").doc(quizId).get();
+  }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:letstest/screens/quiz_create.dart';
+import 'package:letstest/screens/quiz_update.dart';
 import 'package:letstest/screens/run_quiz.dart';
 import 'package:letstest/screens/sign_in.dart';
 import 'package:letstest/services/authentication.dart';
 import 'package:letstest/services/database.dart';
+import 'package:letstest/widgets/attempt_summar_widgets.dart';
 import '../utils/const.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final DatabaseService databaseService = DatabaseService();
   Stream getQuizes = Stream.empty();
+  Stream getAttempts = Stream.empty();
   bool hasError = false;
   AuthService authService = AuthService();
 
@@ -28,10 +31,27 @@ class _HomeScreenState extends State<HomeScreen> {
         hasError = false;
       });
     }).catchError((error) {
-      // Handle the error and set hasError to true
       setState(() {
         hasError = true;
       });
+    });
+
+    databaseService.getAttempts().then((value) {
+      setState(() {
+        getAttempts = value;
+        hasError = false;
+      });
+    }).catchError((error) {
+      setState(() {
+        hasError = true;
+      });
+    });
+  }
+
+  void deleteQuiz(String quizId) async {
+    await databaseService.deleteQuiz(quizId);
+    setState(() {
+      getQuizes = databaseService.getQuizes();
     });
   }
 
@@ -74,12 +94,20 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(16.0),
         child: hasError
             ? const Center(
-                child: Text(
-                  'Failed to load quizzes. Please try again later.',
-                  style: TextStyle(color: kCommonColor),
-                ),
-              )
-            : StreamBuilder(
+          child: Text(
+            'Failed to load quizzes or attempts. Please try again later.',
+            style: TextStyle(color: kCommonColor),
+          ),
+        )
+            : Column(
+          children: [
+            const Text(
+              'Quizzes',
+              style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              flex: 2,
+              child: StreamBuilder(
                 stream: getQuizes,
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -102,6 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: quizDocs.length,
                     itemBuilder: (context, index) {
                       var quizData = quizDocs[index].data();
+                      var quizId = quizDocs[index].id;
                       return Card(
                         elevation: 4,
                         child: ListTile(
@@ -110,17 +139,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => RunQuiz(
-                                          quizId: quizData['quizId'],
-                                        )));
+                                      quizId: quizId,
+                                    )));
                           },
-                          title: Text(quizData['quizTitle']),
-                          subtitle: Text(quizData['quizDesc']),
+                          title: Text(quizData['quizTitle'] ?? 'No Title',style: TextStyle(fontWeight: FontWeight.bold),),
+                          subtitle: Text(quizData['quizDesc'] ?? 'No Description'),
+                          trailing: PopupMenuButton(
+                            onSelected: (value) {
+                              if (value == 'edit') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => QuizUpdate(
+                                          quizId: quizId,
+                                          quizData: quizData,
+                                        )));
+                              } else if (value == 'delete') {
+                                deleteQuiz(quizId);
+                              }
+                            },
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                value: 'edit',
+                                child: Text('Edit'),
+                              ),
+                              PopupMenuItem(
+                                value: 'delete',
+                                child: Text('Delete'),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },
                   );
                 },
               ),
+            ),
+            const SizedBox(height: 80),
+            const Text(
+              'Summary',
+              style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+            ),
+            AttemptsSummaryWidget(attemptsStream: getAttempts)
+          ],
+        ),
       ),
     );
   }

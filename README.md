@@ -1,5 +1,5 @@
 ## Let's Test - Advanced Flutter Quiz App
-
+![Alt text for your image](image_url)
 This is a full-featured Flutter quiz application that allows users to:
 
 * **Login and Signup:** Register or login with an existing account.
@@ -34,12 +34,17 @@ This app utilizes Firebase for user authentication and data storage.
 
 **Dependencies:**
 
-* cloud_firestore: For interacting with a Firebase Firestore database.
-* firebase_auth: For user authentication with Firebase.
-* flutter: The core Flutter framework.
-    * Additional packages might be required based on specific UI implementation.
+* cached_network_image: ^3.3.1 (Used for loading images from the network)
+* cloud_firestore: ^5.0.2 (Interaction with Firebase Firestore database)
+* firebase_auth: ^5.1.1 (User authentication with Firebase)
+* firebase_core: ^3.1.1 (Core Firebase functionalities)
+* provider: ^6.1.2 (State management for Flutter)
+* random_string: ^2.3.1 (Optional, for generating random strings)
+* shared_preferences: ^2.2.3 (Storing user preferences locally)
+* flutter: (Core Flutter framework, assumed to be already installed)
+* Additional packages might be required based on specific UI implementation
 
-**Code Structure:**
+* **Code Structure:**
 
 * `lib/models/`: Contains model classes for user data, quiz data, and question data.
 * `lib/services/`: Handles interactions with Firebase Firestore and authentication.
