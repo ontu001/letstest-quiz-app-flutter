@@ -21,6 +21,7 @@ int total = 0, correct = 0, incorrect = 0, attempted = 0, notAttempted = 0;
 class _RunQuizState extends State<RunQuiz> {
   DatabaseService databaseService = new DatabaseService();
   QuerySnapshot? querySnapshot;
+  int currentQuestionIndex = 0;
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _RunQuizState extends State<RunQuiz> {
         correct = 0;
         incorrect = 0;
         notAttempted = 0;
+        currentQuestionIndex = 0;
       });
     } catch (error) {}
   }
@@ -45,7 +47,7 @@ class _RunQuizState extends State<RunQuiz> {
       DocumentSnapshot querySnapshot) async {
     QuestionModel questionModel = new QuestionModel();
     Map<String, dynamic>? data = querySnapshot.data()
-        as Map<String, dynamic>?; // Call the data() function and cast to a map
+    as Map<String, dynamic>?; // Call the data() function and cast to a map
     if (data != null) {
       questionModel.question = data["question"];
     }
@@ -65,6 +67,22 @@ class _RunQuizState extends State<RunQuiz> {
     questionModel.answered = false;
 
     return questionModel;
+  }
+
+  void nextQuestion() {
+    if (currentQuestionIndex < total - 1) {
+      setState(() {
+        currentQuestionIndex++;
+      });
+    }
+  }
+
+  void previousQuestion() {
+    if (currentQuestionIndex > 0) {
+      setState(() {
+        currentQuestionIndex--;
+      });
+    }
   }
 
   @override
@@ -93,30 +111,43 @@ class _RunQuizState extends State<RunQuiz> {
         padding: const EdgeInsets.all(15.0),
         child: querySnapshot == null
             ? const Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                itemCount: querySnapshot!.docs.length,
-                itemBuilder: (context, index) {
-                  return FutureBuilder<QuestionModel>(
-                    future: getQuestionModelFromSnapshot(
-                        querySnapshot!.docs[index]),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        print("Error: ${snapshot.error}");
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (snapshot.hasData) {
-                        return QuizRunWidget(
-                          index: index,
-                          questionModel: snapshot.data!,
-                        );
-                      } else {
-                        return const Center(child: Text('No Data Available'));
-                      }
-                    },
-                  );
-                },
-              ),
+            : FutureBuilder<QuestionModel>(
+          future: getQuestionModelFromSnapshot(
+              querySnapshot!.docs[currentQuestionIndex]),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              print("Error: ${snapshot.error}");
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (snapshot.hasData) {
+              return Column(
+                children: [
+                  QuizRunWidget(
+                    index: currentQuestionIndex,
+                    questionModel: snapshot.data!,
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: previousQuestion,
+                        child: const Text('Previous',style: TextStyle(color: kCommonColor)),
+                      ),
+                      ElevatedButton(
+                        onPressed: nextQuestion,
+                        child: const Text('Next',style: TextStyle(color: kCommonColor),),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            } else {
+              return const Center(child: Text('No Data Available'));
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kCommonColor,
