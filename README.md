@@ -1,5 +1,4 @@
 ## Let's Test - Advanced Flutter Quiz App
-![Alt text for your image]([image_url](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDHvnyoyWI-FlgTfOWRoJjazD3ke1Q6hOgfQ&s)
 This is a full-featured Flutter quiz application that allows users to:
 
 * **Login and Signup:** Register or login with an existing account.
