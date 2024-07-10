@@ -40,9 +40,11 @@ class _RunQuizState extends State<RunQuiz> {
     }
   }
 
-  Future<QuestionModel> getQuestionModelFromSnapshot(DocumentSnapshot querySnapshot) async {
+  Future<QuestionModel> getQuestionModelFromSnapshot(
+      DocumentSnapshot querySnapshot) async {
     QuestionModel questionModel = new QuestionModel();
-    Map<String, dynamic>? data = querySnapshot.data() as Map<String, dynamic>?; // Call the data() function and cast to a map
+    Map<String, dynamic>? data = querySnapshot.data()
+        as Map<String, dynamic>?; // Call the data() function and cast to a map
     if (data != null) {
       questionModel.question = data["question"];
     }
@@ -72,29 +74,32 @@ class _RunQuizState extends State<RunQuiz> {
         child: querySnapshot == null
             ? Center(child: CircularProgressIndicator())
             : Container(
-          child: ListView.builder(
-            itemCount: querySnapshot!.docs.length,
-            itemBuilder: (context, index) {
-              return FutureBuilder<QuestionModel>(
-                future: getQuestionModelFromSnapshot(querySnapshot!.docs[index]),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    print("Error: ${snapshot.error}");
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (snapshot.hasData) {
-                    return QuizRunWidget(
-                      questionModel: snapshot.data!,
+                child: ListView.builder(
+                  itemCount: querySnapshot!.docs.length,
+                  itemBuilder: (context, index) {
+                    return FutureBuilder<QuestionModel>(
+                      future: getQuestionModelFromSnapshot(
+                          querySnapshot!.docs[index]),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          print("Error: ${snapshot.error}");
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (snapshot.hasData) {
+                          return QuizRunWidget(
+                            questionModel: snapshot.data!,
+                          );
+                        } else {
+                          return Center(child: Text('No Data Available'));
+                        }
+                      },
                     );
-                  } else {
-                    return Center(child: Text('No Data Available'));
-                  }
-                },
-              );
-            },
-          ),
-        ),
+                  },
+                ),
+              ),
       ),
     );
   }
@@ -114,39 +119,128 @@ class _QuizRunWidgetState extends State<QuizRunWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-
       children: [
-        Text(widget.questionModel.question ?? '',style: TextStyle(fontSize: 22.0),),
-        SizedBox(height: 5),
-        QuizOptionDesignWidgets(
-          description: widget.questionModel.option1 ?? '',
-          correctAnswer: widget.questionModel.correctOption ?? '',
-          option: 'A',
-          optionSelected: optionSelected.toString(),
+        Text(
+          widget.questionModel.question ?? '',
+          style: TextStyle(fontSize: 22.0),
         ),
         SizedBox(height: 5),
-        QuizOptionDesignWidgets(
-          description: widget.questionModel.option2 ?? '',
-          correctAnswer: widget.questionModel.correctOption ?? '',
-          option: 'B',
-          optionSelected: optionSelected.toString(),
+        GestureDetector(
+          onTap: () {
+            if (widget.questionModel.answered != null &&
+                !widget.questionModel.answered!) {
+              if (widget.questionModel.option1 ==
+                  widget.questionModel.correctOption) {
+                optionSelected = widget.questionModel.option1;
+                widget.questionModel.answered = true;
+                widget.questionModel.answered = true;
+                correct = correct + 1;
+                notAttempted = notAttempted - 1;
+                setState(() {});
+              } else {
+                optionSelected = widget.questionModel.option1;
+                widget.questionModel.answered = true;
+                incorrect = incorrect + 1;
+                notAttempted = notAttempted - 1;
+                setState(() {});
+              }
+            }
+          },
+          child: QuizOptionDesignWidgets(
+            description: widget.questionModel.option1 ?? '',
+            correctAnswer: widget.questionModel.correctOption ?? '',
+            option: 'A',
+            optionSelected: optionSelected.toString(),
+          ),
         ),
         SizedBox(height: 5),
-        QuizOptionDesignWidgets(
-          description: widget.questionModel.option3 ?? '',
-          correctAnswer: widget.questionModel.correctOption ?? '',
-          option: 'C',
-          optionSelected: optionSelected.toString(),
+        GestureDetector(
+          onTap: () {
+            if (widget.questionModel.answered != null &&
+                !widget.questionModel.answered!) {
+              if (widget.questionModel.option2 ==
+                  widget.questionModel.correctOption) {
+                optionSelected = widget.questionModel.option2;
+                widget.questionModel.answered = true;
+                widget.questionModel.answered = true;
+                correct = correct + 1;
+                notAttempted = notAttempted - 1;
+                setState(() {});
+              } else {
+                optionSelected = widget.questionModel.option2;
+                widget.questionModel.answered = true;
+                incorrect = incorrect + 1;
+                notAttempted = notAttempted - 1;
+                setState(() {});
+              }
+            }
+          },
+          child: QuizOptionDesignWidgets(
+            description: widget.questionModel.option2 ?? '',
+            correctAnswer: widget.questionModel.correctOption ?? '',
+            option: 'B',
+            optionSelected: optionSelected.toString(),
+          ),
         ),
         SizedBox(height: 5),
-        QuizOptionDesignWidgets(
-          description: widget.questionModel.option4 ?? '',
-          correctAnswer: widget.questionModel.correctOption ?? '',
-          option: 'D',
-          optionSelected: optionSelected.toString(),
+        GestureDetector(
+          onTap: () {
+            if (widget.questionModel.answered != null &&
+                !widget.questionModel.answered!) {
+              if (widget.questionModel.option3 ==
+                  widget.questionModel.correctOption) {
+                optionSelected = widget.questionModel.option3;
+                widget.questionModel.answered = true;
+                widget.questionModel.answered = true;
+                correct = correct + 1;
+                notAttempted = notAttempted - 1;
+                setState(() {});
+              } else {
+                optionSelected = widget.questionModel.option3;
+                widget.questionModel.answered = true;
+                incorrect = incorrect + 1;
+                notAttempted = notAttempted - 1;
+                setState(() {});
+              }
+            }
+          },
+          child: QuizOptionDesignWidgets(
+            description: widget.questionModel.option3 ?? '',
+            correctAnswer: widget.questionModel.correctOption ?? '',
+            option: 'C',
+            optionSelected: optionSelected.toString(),
+          ),
+        ),
+        SizedBox(height: 5),
+        GestureDetector(
+          onTap: () {
+            if (widget.questionModel.answered != null &&
+                !widget.questionModel.answered!) {
+              if (widget.questionModel.option4 ==
+                  widget.questionModel.correctOption) {
+                optionSelected = widget.questionModel.option4;
+                widget.questionModel.answered = true;
+                widget.questionModel.answered = true;
+                correct = correct + 1;
+                notAttempted = notAttempted - 1;
+                setState(() {});
+              } else {
+                optionSelected = widget.questionModel.option4;
+                widget.questionModel.answered = true;
+                incorrect = incorrect + 1;
+                notAttempted = notAttempted - 1;
+                setState(() {});
+              }
+            }
+          },
+          child: QuizOptionDesignWidgets(
+            description: widget.questionModel.option4 ?? '',
+            correctAnswer: widget.questionModel.correctOption ?? '',
+            option: 'D',
+            optionSelected: optionSelected.toString(),
+          ),
         ),
       ],
     );
   }
 }
-
