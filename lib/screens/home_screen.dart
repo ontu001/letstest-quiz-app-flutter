@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:letstest/screens/quiz_create.dart';
+import 'package:letstest/screens/run_quiz.dart';
 import 'package:letstest/screens/sign_in.dart';
 import 'package:letstest/services/authentication.dart';
 import 'package:letstest/services/database.dart';
@@ -57,7 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             onPressed: () {
               authService.signOut();
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>SignIn()));
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (_) => SignIn()));
             },
             icon: const Icon(
               Icons.logout,
@@ -103,6 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Card(
                         elevation: 4,
                         child: ListTile(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => RunQuiz(
+                                  quizId: quizData['quizId'],
+                                )));
+                          },
                           title: Text(quizData['quizTitle']),
                           subtitle: Text(quizData['quizDesc']),
                           leading: Image.network(

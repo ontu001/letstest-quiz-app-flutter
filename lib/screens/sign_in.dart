@@ -141,7 +141,8 @@ class _SignInState extends State<SignIn> {
                         onTap: () {
                           signIn();
                         },
-                        child: customOrangeButton(context, 'Sign In',fullWidth: true),
+                        child: customOrangeButton(context, 'Sign In',
+                            fullWidth: true),
                       ),
                     ],
                   ),
