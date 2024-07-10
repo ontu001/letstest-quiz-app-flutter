@@ -36,7 +36,7 @@ class _SignInState extends State<SignIn> {
           });
           SaveUserInfo.saveLoggedInUser(loggedIn: true);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => HomeScreen()));
+              context, MaterialPageRoute(builder: (_) => const HomeScreen()));
         } else {
           setState(() {
             isLoading = false;

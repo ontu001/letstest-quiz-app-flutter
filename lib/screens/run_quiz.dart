@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:letstest/model/question_model.dart';
+import 'package:letstest/screens/home_screen.dart';
 import 'package:letstest/screens/result_page.dart';
 import 'package:letstest/services/database.dart';
-import 'package:letstest/widgets/quiz_option_design_widgets.dart';
-
 import '../utils/const.dart';
 import '../widgets/quiz_run_widget.dart';
 
@@ -39,9 +38,7 @@ class _RunQuizState extends State<RunQuiz> {
         incorrect = 0;
         notAttempted = 0;
       });
-    } catch (error) {
-      print("Error fetching quiz data: $error");
-    }
+    } catch (error) {}
   }
 
   Future<QuestionModel> getQuestionModelFromSnapshot(
@@ -73,41 +70,55 @@ class _RunQuizState extends State<RunQuiz> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Lets Test',
+          style: TextStyle(fontSize: 18.0, color: kCommonColor),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: kCommonColor,
+          ),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+          },
+        ),
+        automaticallyImplyLeading: false,
+        elevation: 0,
+      ),
       body: Padding(
-        padding: EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(15.0),
         child: querySnapshot == null
-            ? Center(child: CircularProgressIndicator())
-            : Container(
-                child: ListView.builder(
-                  itemCount: querySnapshot!.docs.length,
-                  itemBuilder: (context, index) {
-                    return FutureBuilder<QuestionModel>(
-                      future: getQuestionModelFromSnapshot(
-                          querySnapshot!.docs[index]),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          print("Error: ${snapshot.error}");
-                          return Center(
-                              child: Text('Error: ${snapshot.error}'));
-                        } else if (snapshot.hasData) {
-                          return QuizRunWidget(
-                            index: index,
-                            questionModel: snapshot.data!,
-                          );
-                        } else {
-                          return Center(child: Text('No Data Available'));
-                        }
-                      },
-                    );
-                  },
-                ),
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: querySnapshot!.docs.length,
+                itemBuilder: (context, index) {
+                  return FutureBuilder<QuestionModel>(
+                    future: getQuestionModelFromSnapshot(
+                        querySnapshot!.docs[index]),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        print("Error: ${snapshot.error}");
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (snapshot.hasData) {
+                        return QuizRunWidget(
+                          index: index,
+                          questionModel: snapshot.data!,
+                        );
+                      } else {
+                        return const Center(child: Text('No Data Available'));
+                      }
+                    },
+                  );
+                },
               ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.check, color: Colors.white),
         backgroundColor: kCommonColor,
         onPressed: () {
           Navigator.pushReplacement(
@@ -119,6 +130,7 @@ class _RunQuizState extends State<RunQuiz> {
                       correct: correct,
                       notattempted: notAttempted)));
         },
+        child: const Icon(Icons.check, color: Colors.white),
       ),
     );
   }

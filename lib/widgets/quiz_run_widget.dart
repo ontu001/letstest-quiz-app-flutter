@@ -1,8 +1,5 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:letstest/model/question_model.dart';
-import 'package:letstest/services/database.dart';
 import 'package:letstest/widgets/quiz_option_design_widgets.dart';
 
 import '../screens/run_quiz.dart';

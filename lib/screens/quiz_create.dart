@@ -17,7 +17,7 @@ class QuizCreate extends StatefulWidget {
 class _QuizCreateState extends State<QuizCreate> {
   final _keyForm = GlobalKey<FormState>();
   DatabaseService databaseService = DatabaseService();
-  late String quizPrompt, quizDescription, imageUrl, quizId;
+  late String quizPrompt, quizDescription, quizId;
   bool _isLoading = false;
 
   createQuiz() {
@@ -28,7 +28,6 @@ class _QuizCreateState extends State<QuizCreate> {
       quizId = randomAlphaNumeric(16);
       Map<String, String> quizData = {
         "quizId": quizId,
-        "quizImgUrl": imageUrl,
         "quizTitle": quizPrompt,
         "quizDesc": quizDescription
       };
@@ -66,7 +65,7 @@ class _QuizCreateState extends State<QuizCreate> {
           ),
           onPressed: () {
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                context, MaterialPageRoute(builder: (_) => const HomeScreen()));
           },
         ),
         elevation: 0,
@@ -83,19 +82,7 @@ class _QuizCreateState extends State<QuizCreate> {
                 key: _keyForm,
                 child: Column(
                   children: [
-                    CustomTextFormField(
-                      hintText: 'Image Url',
-                      obscureText: false,
-                      onChanged: (value) {
-                        imageUrl = value;
-                      },
-                      validator: (value) {
-                        return value!.isEmpty ? "image url" : null;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15.0,
-                    ),
+
                     CustomTextFormField(
                       hintText: 'Quiz Title',
                       obscureText: false,

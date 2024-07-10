@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.add,
             color: kCommonColor,
           ),
@@ -106,17 +106,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         elevation: 4,
                         child: ListTile(
                           onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (_) => RunQuiz(
-                                  quizId: quizData['quizId'],
-                                )));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => RunQuiz(
+                                          quizId: quizData['quizId'],
+                                        )));
                           },
                           title: Text(quizData['quizTitle']),
                           subtitle: Text(quizData['quizDesc']),
-                          leading: Image.network(
-                            quizData['quizImgUrl'],
-                            fit: BoxFit.cover,
-                          ),
                         ),
                       );
                     },
