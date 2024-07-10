@@ -20,7 +20,9 @@ This app utilizes Firebase for user authentication and data storage.
 * Create a Firebase project and configure it for your app: [https://firebase.google.com/docs/](https://firebase.google.com/docs/)
 2. **Clone the repository:**
    ```bash
-   git clone https://your-github-repo-url.git
+   git clone https://github.com/ontu001/letstest-quiz-app-flutter quizapp
+    cd letstest-quiz-app-flutter
+    flutter run
    ```
 3. **Configure Firebase:**
 * Create a `firebase_options.dart` file in your project's root directory with your Firebase project configuration (obtained from the Firebase console).
@@ -43,8 +45,3 @@ This app utilizes Firebase for user authentication and data storage.
 * `lib/services/`: Handles interactions with Firebase Firestore and authentication.
 * `lib/screens/`: Contains screens for login, signup, quiz creation, edit, delete, taking quizzes, and viewing results.
 * `lib/widgets/`: Reusable UI components for displaying quiz options, creating questions, etc.
-
-**Customization:**
-
-* You can customize the app's appearance and functionality based on your preferences.
-* Extend the data models and services to accommodate additional features.
