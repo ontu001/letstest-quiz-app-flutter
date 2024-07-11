@@ -75,7 +75,7 @@ class _QuizUpdateState extends State<QuizUpdate> {
               ),
               const SizedBox(height: 20),
              GestureDetector(
-                 onTap: ()=>updateQuiz,
+                onTap: updateQuiz,
                  child: customOrangeButton(context, 'Update',width: 200)),
             ],
           ),
